@@ -10,10 +10,7 @@ import {
 function ToDo() {
   // tasks state
 
-  const [toDo, setToDo] = useState([
-    { id: 1, title: "task1", status: false },
-    { id: 2, title: "task2", status: false },
-  ]);
+  const [toDo, setToDo] = useState([]);
 
   // temp state
 
@@ -49,14 +46,28 @@ function ToDo() {
   };
   // cancel update
 
-  const cancelUpdate = () => {};
+  const cancelUpdate = () => {
+    setUpdateData("");
+  };
   // change tak for update
 
-  const changeTask = (e) => {};
+  const changeTask = (e) => {
+    let newEntry = {
+      id: updateData.id,
+      title: e.target.value,
+      status: updateData.status ? true : false,
+    };
+    setUpdateData(newEntry);
+  };
 
   // update task
 
-  const updateTask = (e) => {};
+  const updateTask = () => {
+    let filterRecords = [...toDo].filter((task) => task.id !== updateData.id);
+    let updatedObject = [...filterRecords, updateData];
+    setToDo(updatedObject);
+    setUpdateData("");
+  };
 
   return (
     <div className="container">
@@ -64,31 +75,45 @@ function ToDo() {
 
       {/* update task */}
 
-      <div className="row">
-        <div className="col">
-          <input className="form-control form-control-lg" />
-        </div>
-        <div className="col-auto">
-          <button className="btn btn-lg btn-success mx-4">Update Task</button>
-          <button className="btn btn-lg btn-warning">Update Task</button>
-        </div>
-      </div>
-
-      {/* add tak */}
-      <div className="row">
-        <div className="col">
-          <input
-            value={newTask}
-            onChange={(e) => setNewTask(e.target.value)}
-            className="form-control form-control-lg"
-          />
-        </div>
-        <div className="col-auto">
-          <button onClick={addTask} className="btn btn-lg btn-success">
-            Add Task
-          </button>
-        </div>
-      </div>
+      {updateData && updateTask ? (
+        <>
+          <div className="row">
+            <div className="col">
+              <input
+                value={updateData && updateData.title}
+                onChange={(e) => changeTask(e)}
+                className="form-control form-control-lg"
+              />
+            </div>
+            <div className="col-auto">
+              <button
+                onClick={updateTask}
+                className="btn btn-lg btn-success mx-4"
+              >
+                Update
+              </button>
+              <button onClick={cancelUpdate} className="btn btn-lg btn-warning">Cancel</button>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="row">
+            <div className="col">
+              <input
+                value={newTask}
+                onChange={(e) => setNewTask(e.target.value)}
+                className="form-control form-control-lg"
+              />
+            </div>
+            <div className="col-auto">
+              <button onClick={addTask} className="btn btn-lg btn-success">
+                Add Task
+              </button>
+            </div>
+          </div>
+        </>
+      )}
 
       {toDo && toDo.length ? "" : "No Tasks.."}
       {toDo &&
@@ -113,7 +138,16 @@ function ToDo() {
                     </span>
 
                     {task.status ? null : (
-                      <span title="Edit">
+                      <span
+                        onClick={() =>
+                          setUpdateData({
+                            id: task.id,
+                            title: task.title,
+                            status: task.status ? true : false,
+                          })
+                        }
+                        title="Edit"
+                      >
                         <FontAwesomeIcon icon={faPen} />
                       </span>
                     )}
