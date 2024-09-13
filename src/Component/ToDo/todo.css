@@ -1,0 +1,69 @@
+body {
+  background-color: black;
+  color: white;
+}
+
+h2 {
+  text-align: center;
+  padding: 40px 0;
+}
+
+input{
+    margin-bottom: 20px;
+}
+
+.taskbg {
+  background-color: #555;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  padding: 10px 140px 10px 15px;
+  text-align: left;
+  font-size: 18px;
+  position: relative;
+}
+
+.taskbg .done .taskTitle {
+  text-decoration: line-through;
+  opacity: 0.3;
+}
+
+.taskbg .tasknum {
+  margin-right: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 3px 10px;
+}
+
+.taskbg .taskTitle {
+  font-size: 20px;
+  font-weight: 500;
+  
+}
+
+.taskbg .taskText{
+    flex: 1;
+    margin: 20px;
+}
+
+.iconWrap{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+    width: auto;
+    display: inline-block;
+}
+
+.iconWrap span{
+    display: inline-block;
+    margin: 0 10px;
+    cursor: pointer;
+    color: #00ff89;
+}
+
+.iconWrap span:hover{
+    color: yellow;
+    transition: 0.5s ease-in-out;
+}
